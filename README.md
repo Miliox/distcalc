@@ -1,0 +1,4 @@
+distcalc
+========
+
+Distributed Ruby Calculator
