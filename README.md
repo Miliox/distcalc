@@ -27,6 +27,7 @@ Or install it yourself as:
 ## Usage
 
 Simple usage:
+
     $ distcalc
       usage: distcalc calc [--verbose] [-s[=<uri|ip>]] [<math_expr>]
          or: distcalc eval-server [--verbose] -t[=<add|sub|mul|div>] [--port=[=<port>]]
@@ -62,9 +63,11 @@ or from a file to a file:
       15
 
 Create calc server:
+
     $ distcalc calc-server -p 8080 < eval_servers.yaml
 
 Create an operator server:
+
     $ distcalc eval-server -t add -p 54321
 
 ## Contributing
