@@ -1,6 +1,7 @@
 module Calculator
   class Scanner
     OPERATORS = [?+, ?-, ?*, ?/, ?(, ?)]
+    OPERATORS_TOKENS = [:add, :sub, :mult, :div, :open_bracket, :close_bracket]
 
     WHITE_SPACES = [?\ , ?\r, ?\n, ?\v]
 
@@ -37,7 +38,7 @@ module Calculator
         if OPERATORS.include? c
           push_number
           @tokens.push(OPERATOR_MAP[c])
-        elsif c >= ?0 and c <= ?9
+        elsif (?0..?9).include? c
           @num_tokens.push(c)
         elsif WHITE_SPACES.include? c
           push_number
