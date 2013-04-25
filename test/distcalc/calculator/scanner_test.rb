@@ -35,7 +35,8 @@ class TestScanner < Test::Unit::TestCase
                  @scanner.scan('(+3)'))
     assert_equal([:open_bracket, :sub, 5, :close_bracket],
                  @scanner.scan('(-5)'))
-    assert_equal([1, :add, 6, :add, 5, :mult, 10, :sub, 7, :div, 7], @scanner.scan('1 + 6 + 5 * 10 - 7 / 7'))
+    assert_equal([1, :add, 6, :add, 5, :mult, 10, :sub, 7, :div, 7],
+                 @scanner.scan('1 + 6 + 5 * 10 - 7 / 7'))
   end
 
   def test__scan__invalid_character_in_expression__raise_scanner_error
