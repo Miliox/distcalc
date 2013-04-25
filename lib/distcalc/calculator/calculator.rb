@@ -5,7 +5,7 @@ require_relative './scanner'
 
 module Calculator
   class Maincalculator
-    def initialize()
+    def initialize
       @scanner = Calculator::Scanner.new
       @conv = Calculator::InfixToPostfix.new
       @calc = Calculator::PostfixMachine.new(
@@ -16,11 +16,11 @@ module Calculator
     end
 
     #get the user input from keyboard
-    def read_and_calculate()
-        puts "Insert the equation"
+    def read_and_calculate
+        puts 'Insert the equation'
         entry = gets.chomp
         result = calculate(entry)
-        puts "Result --->  " + result.to_s
+        puts 'Result --->  ', result.to_s
     end
 
     #calculate based on a string... good for testing purposes

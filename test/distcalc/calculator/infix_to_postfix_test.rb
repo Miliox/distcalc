@@ -38,7 +38,7 @@ class TestInfixToPostfix < Test::Unit::TestCase
 
   def test__expr_without_any_brackets
     expr = [1, :add, 6, :add, 5, :mult, 10, :sub, 7, :div, 7]
-    expect = [1, 6, :add, 5, 10, :mult, 7, 7, :div, :sub, :add]
+    expect = [1, 6, :add, 5, 10, :mult, :add, 7, 7, :div, :sub]
 
     assert_equal(expect, @conv.to_postfix(expr))
   end

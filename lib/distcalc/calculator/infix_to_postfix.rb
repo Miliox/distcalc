@@ -43,12 +43,16 @@ module Calculator
 
     private
     def push_operator(op)
-      unless @operators.empty?
-        if OP_POP_PRIORY[@operators.last] >= OP_PUSH_PRIORY[op]
-          @output_tokens.push(@operators.pop)
-        end
+      while is_stack_operator_lower? op do
+        @output_tokens.push(@operators.pop)
       end
+
       @operators.push(op)
+    end
+
+    private
+    def is_stack_operator_lower?(op)
+      !@operators.empty? and (OP_POP_PRIORY[@operators.last] >= OP_PUSH_PRIORY[op])
     end
 
     private
