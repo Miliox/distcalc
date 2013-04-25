@@ -36,6 +36,13 @@ class TestInfixToPostfix < Test::Unit::TestCase
     assert_equal(expect, @conv.to_postfix(expr))
   end
 
+  def test__expr_without_any_brackets
+    expr = [1,:add,6,:add,5,:mult,10,:sub,7,:div,7]
+    expect = [1,6,:add,5,10,:mult,7,7,:div,:sub,:add]
+
+    assert_equal(expect, @conv.to_postfix(expr))
+  end
+
   def test__to_postfix__common_errors__raise_standard_error
     assert_raise(StandardError) do
       @conv.to_postfix([:open_bracket, 9, :add, 4])
