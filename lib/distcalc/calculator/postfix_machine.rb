@@ -1,5 +1,4 @@
-require_relative './scanner'
-require_relative './infix_to_postfix'
+require_relative './expression_tokenizer'
 require_relative './math_operations'
 
 module Calculator

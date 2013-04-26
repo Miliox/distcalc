@@ -1,4 +1,4 @@
-require 'distcalc/calculator/infix_to_postfix'
+require 'distcalc/calculator/infix_translator'
 require 'test/unit'
 
 class TestInfixTranslator < Test::Unit::TestCase

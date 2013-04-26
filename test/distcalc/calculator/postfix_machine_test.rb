@@ -1,7 +1,7 @@
-require 'distcalc/calculator/postfix_calculator'
+require 'distcalc/calculator/postfix_machine'
 require 'test/unit'
 
-class TestPostfixCalculator < Test::Unit::TestCase
+class TestPostfixMachine < Test::Unit::TestCase
   def setup
     @calc = Calculator::PostfixMachine.new(
             {add:  Calculator::Addition.new,

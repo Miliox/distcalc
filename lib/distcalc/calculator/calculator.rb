@@ -1,13 +1,13 @@
-require_relative './infix_to_postfix'
-require_relative './postfix_calculator'
-require_relative './scanner'
+require_relative './expression_tokenizer'
+require_relative './infix_translator'
+require_relative './postfix_machine'
 
 
 module Calculator
   class Maincalculator
     def initialize
-      @scanner = Calculator::Scanner.new
-      @conv = Calculator::InfixToPostfix.new
+      @scanner = Calculator::ExpressionTokenizer.new
+      @conv = Calculator::InfixTranslator.new
       @calc = Calculator::PostfixMachine.new(
                 { add:  Calculator::Addition.new,
                   sub:  Calculator::Subtraction.new,
@@ -25,7 +25,7 @@ module Calculator
 
     #calculate based on a string... good for testing purposes
     def calculate(entry)
-        expr = @scanner.scan(entry)
+        expr = @scanner.tokenize(entry)
         expressao = @conv.to_postfix(expr)
         @calc.eval(expressao)
     end

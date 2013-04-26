@@ -1,4 +1,4 @@
-require_relative './scanner'
+require_relative './expression_tokenizer'
 
 module Calculator
   class InfixTranslator
@@ -23,7 +23,7 @@ module Calculator
 
     private
     def eval_token(token)
-      if Scanner::OPERATORS_TOKENS.include? token
+      if ExpressionTokenizer::OPERATOR_TOKEN.include? token
         eval_operator(token)
       elsif token.is_a? Numeric
         @postfix_expression.push(token)
@@ -34,7 +34,7 @@ module Calculator
 
     private
     def eval_operator(operator)
-      if token != :close_bracket
+      if operator != :close_bracket
         push_to_stack(operator)
       else
         pop_stack_until_open_bracket

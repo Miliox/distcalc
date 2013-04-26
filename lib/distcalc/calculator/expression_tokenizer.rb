@@ -1,7 +1,8 @@
 module Calculator
-  class Scanner
-    OPERATORS = [?+, ?-, ?*, ?/, ?(, ?)]
-    OPERATORS_TOKENS = [:add, :sub, :mult, :div, :open_bracket, :close_bracket]
+  class ExpressionTokenizer
+    OPERATOR_TOKEN = [:add, :sub, :mult, :div] +
+                     [:open_bracket, :close_bracket]
+    OPERATORS_CHAR = [?+, ?-, ?*, ?/, ?(, ?)]
 
     WHITE_SPACES = [?\ , ?\r, ?\n, ?\v]
 
@@ -19,7 +20,7 @@ module Calculator
     # @param math_expr [String] the math expression
     # @return [Array<Number, Symbol>] a stream of tokens
     # @raise [ScannerError] If found an illegal character in expression
-    def scan (math_expr)
+    def tokenize(math_expr)
       @num_tokens = Array.new
       @tokens = Array.new
 
@@ -35,7 +36,7 @@ module Calculator
 
     private
     def eval_char(c, pos)
-        if OPERATORS.include? c
+        if OPERATORS_CHAR.include? c
           push_number
           @tokens.push(OPERATOR_MAP[c])
         elsif (?0..?9).include? c
