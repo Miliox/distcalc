@@ -5,6 +5,5 @@ module Distcalc
   # Your code goes here...
 end
 
-
-evalServer = EvalServer.new #ARGV[0], ARGV[1]
-evalServer.start()
+echoServer = GenericServer.new EchoHanlder.new
+echoServer.start()

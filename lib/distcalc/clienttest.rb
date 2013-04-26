@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'socket'
 
 s = TCPSocket.new 'localhost', 2000

@@ -1,35 +1,14 @@
 # encoding: UTF-8
-require 'socket'
-require 'logger'
+#Responsible for perform an arithmetic operation given the configured operator
+class EvalHandler
 
-$log = Logger.new(STDOUT)
-$log.level = Logger::INFO
-
-
-# EvalServer implementation
-class EvalServer
-
-  def initialize(operator = 'add', port = 2000)
-    $log.info("initialising EvalServer for
-      #{operator} operation on port: #{port}")
-    @server = TCPServer.new port # Server bound to port 2000
+  def initialize(operator = 'add')
     @operator = operator
   end
 
-  #Starts listen for client connections
-  #
-  def start
-    $log.info('waiting for client connections')
-    loop do
-      Thread.start(@server.accept) do |client|
-        request = client.gets
-        $log.info("evaluating expression #{request} from client #{client}")
-        expr = self.parse_request(request)
-        client.puts self.calculate(expr)
-        client.close
-      end
-    end
-
+  # handle the request TODO create an object to handle the protocol
+  def handle_request(request)
+    calculate(parse_request(request))
   end
 
   # Takes the raw data received from the socket and convert
