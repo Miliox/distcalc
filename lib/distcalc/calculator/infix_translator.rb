@@ -13,12 +13,13 @@ module Calculator
       @postfix_expression = Array.new
       @operator_stack = Array.new
 
-      infix_expression.each do |token|
-        eval_token(token)
-      end
-      pop_operator_until_empty
+      infix_expression.each { |t| eval_token(t) }
 
-      @postfix_expression
+      raise \
+        StandardError.new 'invalid expression: unclosed bracket' \
+        if @operator_stack.include? :open_bracket
+
+      @postfix_expression + @operator_stack.reverse
     end
 
     private
@@ -65,17 +66,6 @@ module Calculator
         @postfix_expression.push(@operator_stack.pop)
       end
       @operator_stack.pop
-    end
-
-    private
-    def pop_operator_until_empty
-      until @operator_stack.empty?
-        if @operator_stack.last != :open_bracket
-          @postfix_expression.push(@operator_stack.pop)
-        else
-          raise StandardError.new 'invalid expression: unclosed bracket'
-        end
-      end
     end
   end
 end
