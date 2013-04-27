@@ -2,6 +2,11 @@ require_relative './expression_tokenizer'
 require_relative './math_operations'
 
 module Calculator
+  # Stack Based Processor that evaluate a Postfix sequence of instructions
+  # Numbers are put on stack
+  # Operation are apply last two stacked number and result put back on stack
+  #
+  # @author Emiliano Firmino
   class PostfixMachine
     def initialize(supported_operations)
       raise unless supported_operations.is_a? Hash
@@ -13,32 +18,34 @@ module Calculator
       @operator = supported_operations
     end
 
-    def eval(math_expr)
-      stack = Array.new
-      math_expr.each do |token|
-        stack.push(token)
-        if @operator.keys.include? stack.last
-          eval_operator(stack)
-        elsif token.is_a? Numeric
-        elsif token_is_a? Symbol
-          raise StandardError.new "not supported operation #{token}"
-        else
-          raise StandardError.new "invalid token #{token}"
-        end
+    # Evaluate a postfix math expression
+    #
+    # @param expr [Array<Number, Symbol>] the postfix tokenizied expression
+    # @return [Number] result of expr
+    # @raise [StandardError] when something wrong
+    def eval(expr)
+      @stack = Array.new
+
+      expr.each do |t| @stack.push(t)
+        execute_operation if t.is_a? Symbol
+        raise StandardError.new "invalid token #{token}" \
+          unless t.is_a? Numeric or t.is_a? Symbol
       end
 
-      if stack.size == 1
-        stack.last
-      else
-        raise StandardError.new 'invalid math expression'
-      end
+      raise StandardError.new 'invalid math expression' \
+        unless @stack.size == 1
+
+      @stack.pop
     end
 
-    def eval_operator(stack)
-      oper = stack.pop
-      op2  = stack.pop
-      op1  = stack.pop
-      stack.push(@operator[oper].eval(op1, op2))
+    private
+    def execute_operation
+      op, arg2, arg1 = @stack.pop, @stack.pop, @stack.pop
+
+      raise StandardError.new "not supported operation #{token}" \
+        unless @operator.keys.include? op
+
+      @stack.push(@operator[op].eval(arg1, arg2))
     end
   end
 end
