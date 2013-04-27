@@ -9,17 +9,17 @@ module Calculator
     #
     # @param tokens [Array<Number, Symbol>] a stream in infix
     # @return tokens [Array<Number, Symbol>] a stream in postfix
-    def to_postfix(infix_expression)
-      @postfix_expression = Array.new
-      @operator_stack = Array.new
+    def to_postfix(infix_expr)
+      @postfix_expr = Array.new
+      @op_stack = Array.new
 
-      infix_expression.each { |t| eval_token(t) }
+      infix_expr.each { |t| eval_token(t) }
 
       raise \
         StandardError.new 'invalid expression: unclosed bracket' \
-        if @operator_stack.include? :open_bracket
+        if @op_stack.include? :open_bracket
 
-      @postfix_expression + @operator_stack.reverse
+      @postfix_expr + @op_stack.reverse
     end
 
     private
@@ -27,7 +27,7 @@ module Calculator
       if ExpressionTokenizer::OPERATOR_TOKEN.include? token
         eval_operator(token)
       elsif token.is_a? Numeric
-        @postfix_expression.push(token)
+        @postfix_expr.push(token)
       else
         raise StandardError.new "invalid token #{token}"
       end
@@ -44,28 +44,27 @@ module Calculator
 
     private
     def push_to_stack(operator)
-      while is_stacked_operator_lower_than? operator do
-        @postfix_expression.push(@operator_stack.pop)
-      end
+      @postfix_expr.push(@op_stack.pop) \
+        while is_stacked_operator_lower_than? operator
 
-      @operator_stack.push(operator)
+      @op_stack.push(operator)
     end
 
     private
     def is_stacked_operator_lower_than?(op)
-      !@operator_stack.empty? and
-        (OP_POP_PRIORY[@operator_stack.last] >= OP_PUSH_PRIORY[op])
+      !@op_stack.empty? and
+        (OP_POP_PRIORY[@op_stack.last] >= OP_PUSH_PRIORY[op])
     end
 
     private
     def pop_stack_until_open_bracket
-      until @operator_stack.last == :open_bracket
-        if @operator_stack.empty?
+      until @op_stack.last == :open_bracket
+        if @op_stack.empty?
           raise StandardError.new 'invalid expression: not found open bracket'
         end
-        @postfix_expression.push(@operator_stack.pop)
+        @postfix_expr.push(@op_stack.pop)
       end
-      @operator_stack.pop
+      @op_stack.pop
     end
   end
 end
