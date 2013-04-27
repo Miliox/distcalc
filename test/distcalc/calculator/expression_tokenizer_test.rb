@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'distcalc/calculator/expression_tokenizer'
 require 'test/unit'
 

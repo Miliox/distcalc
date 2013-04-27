@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'distcalc/calculator/infix_translator'
 require 'test/unit'
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Calculator
   class BinaryOperation
     def eval(arg1, arg2)

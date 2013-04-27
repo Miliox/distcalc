@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Calculator
   class ExpressionTokenizer
     OPERATOR_TOKEN = [:add, :sub, :mult, :div] +

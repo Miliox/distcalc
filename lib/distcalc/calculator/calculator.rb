@@ -1,3 +1,4 @@
+# encoding: utf-8
 require_relative './expression_tokenizer'
 require_relative './infix_translator'
 require_relative './postfix_machine'
