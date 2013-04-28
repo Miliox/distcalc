@@ -42,6 +42,28 @@ class TestInfixTranslator < Test::Unit::TestCase
     assert_equal(expect, @conv.to_postfix(expr))
   end
 
+  def test__expr_start_posneg_number__return_postfix_expression_with_zeros
+    expr1 = [:add, 6 , :sub, 3]
+    expect1 = [0, 6, :add, 3, :sub]
+
+    expr2 = [:sub, 6 , :sub, 3]
+    expect2 = [0, 6, :sub, 3, :sub]
+
+    assert_equal(expect1, @conv.to_postfix(expr1))
+    assert_equal(expect2, @conv.to_postfix(expr2))
+  end
+
+  def test__expr_with_bracket_posneg_number__return_postfix_expression_with_zeros
+    expr1 = [:open_bracket, :add, 6, :sub, 3, :close_bracket]
+    expect1 = [0, 6, :add, 3, :sub]
+
+    expr2 = [6 , :sub, 3, :add, :open_bracket, :add, 1, :close_bracket]
+    expect2 = [6, 3, :sub, 0, 1, :add, :add]
+
+    assert_equal(expect1, @conv.to_postfix(expr1))
+    assert_equal(expect2, @conv.to_postfix(expr2))
+  end
+
   def test__to_postfix__common_errors__raise_standard_error
     assert_raise(StandardError) do
       @conv.to_postfix([:open_bracket, 9, :add, 4])

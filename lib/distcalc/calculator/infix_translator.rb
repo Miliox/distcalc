@@ -11,20 +11,20 @@ module Calculator
     # @param tokens [Array<Number, Symbol>] a stream in infix
     # @return tokens [Array<Number, Symbol>] a stream in postfix
     def to_postfix(infix_expr)
-      @postfix_expr = Array.new
       @op_stack = Array.new
+      @context_stack = [@op_stack]
+      @is_first = true
 
+      @postfix_expr = Array.new
       infix_expr.each { |t| eval_token(t) }
 
-      raise \
-        StandardError.new 'invalid expression: unclosed bracket' \
-        if @op_stack.include? :open_bracket
-
+      check_unclosed_bracket
       @postfix_expr + @op_stack.reverse
     end
 
     private
     def eval_token(token)
+      hack_add_zero_to_support_unary_operation(token)
       if ExpressionTokenizer::OPERATOR_TOKEN.include? token
         eval_operator(token)
       elsif token.is_a? Numeric
@@ -36,11 +36,29 @@ module Calculator
 
     private
     def eval_operator(operator)
-      if operator != :close_bracket
-        push_to_stack(operator)
+      if operator == :open_bracket
+        @is_first = true
+        @op_stack = Array.new
+        @context_stack.push(@op_stack)
+      elsif operator == :close_bracket
+        @postfix_expr += @context_stack.pop.reverse
+        @op_stack = @context_stack.last
+        check_context_stack_underflow
       else
-        pop_stack_until_open_bracket
+        push_to_stack(operator)
       end
+    end
+
+    private
+    def check_context_stack_underflow
+      raise StandardError.new 'invalid expression: not found open bracket' \
+        unless @context_stack.size > 0
+    end
+
+    private
+    def check_unclosed_bracket
+      raise StandardError.new 'invalid expression: unclosed bracket' \
+        unless @context_stack.size == 1
     end
 
     private
@@ -58,14 +76,9 @@ module Calculator
     end
 
     private
-    def pop_stack_until_open_bracket
-      until @op_stack.last == :open_bracket
-        if @op_stack.empty?
-          raise StandardError.new 'invalid expression: not found open bracket'
-        end
-        @postfix_expr.push(@op_stack.pop)
-      end
-      @op_stack.pop
+    def hack_add_zero_to_support_unary_operation(token)
+      @postfix_expr.push(0) if @is_first and [:add, :sub].include? token
+      @is_first = false
     end
   end
 end
