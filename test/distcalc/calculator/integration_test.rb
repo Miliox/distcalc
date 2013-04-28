@@ -12,6 +12,9 @@ class TestIntegration < Test::Unit::TestCase
     assert_equal(55, @calc.calculate('5 * 10 * 2 - 3 * 15'))
     assert_equal(23, @calc.calculate('3 + 7 - 9 * 1 + 22'))
     assert_equal(20, @calc.calculate('(6 + 4) + (5 * 4) / 2'))
+    assert_equal(-6, @calc.calculate('((-3) + 2) - ((+ 5) * 1)'))
+    assert_equal(5, @calc.calculate('+ 10 / 2'))
+    assert_equal(-10, @calc.calculate('- 10 * (-3) / ((-5) - (- 2))'))
   end
 
 end
