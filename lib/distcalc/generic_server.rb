@@ -13,7 +13,6 @@ $log.level = Logger::INFO
 class GenericServer
 
   def initialize(request_handler, port = 2000)
-    raise ArgumentError #unless request_handler != nil
     $log.info("initialising server on port: #{port}")
     @server = TCPServer.new port
     @request_handler = request_handler
@@ -27,6 +26,7 @@ class GenericServer
       Thread.start(@server.accept) do |client|
         request = client.gets
         $log.info("received request #{request} from client #{client}")
+        $log.info(@request_handler.to_s)
         client.puts @request_handler.handle_request(request)
         client.close
       end

@@ -5,10 +5,10 @@ require 'test/unit'
 class TestPostfixMachine < Test::Unit::TestCase
   def setup
     @calc = Calculator::PostfixMachine.new(
-            {add:  Calculator::Addition.new,
-             sub:  Calculator::Subtraction.new,
-             mult: Calculator::Multiplication.new,
-             div:  Calculator::Division.new})
+            {add=>  Calculator::Addition.new,
+             sub=>  Calculator::Subtraction.new,
+             mult=> Calculator::Multiplication.new,
+             div=>  Calculator::Division.new})
   end
 
   def test__eval_basic_expression__return_result

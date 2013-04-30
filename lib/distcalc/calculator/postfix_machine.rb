@@ -10,9 +10,9 @@ module Calculator
   # @author Emiliano Firmino
   class PostfixMachine
     def initialize(supported_operations)
-      raise unless supported_operations.is_a? Hash
-      supported_operations.each_pair do |key, value|
-        raise unless key.is_a? Symbol
+      #raise unless supported_operations.is_a? Hash
+      supported_operations.each do |key, value|
+        #raise unless key.is_a? Symbol
         raise unless value.is_a? BinaryOperation
       end
 
