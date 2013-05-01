@@ -1,8 +1,11 @@
 # encoding: UTF-8
 #Responsible for perform an arithmetic operation given the configured operator
+require './generic_server'
+require './calculator/math_operations'
+
 class EvalHandler
 
-  def initialize(operator = 'add')
+  def initialize(operator)
     @operator = operator
   end
 
@@ -17,10 +20,7 @@ class EvalHandler
   # @param data in the format defined by the communication protocol.
   # @return [Hashtable] the data ready to calculus.
   def parse_request(request)
-    return {
-      'operador1' => 409,
-      'operador2' => 700
-    }
+    return request.split(':')
   end
 
   # Perform the calculus defined for the current instance of the evalsever.
@@ -28,15 +28,13 @@ class EvalHandler
   # @param expr The operands in a hashtable
   # @return [Number] the result of the calculus
   def calculate(expr)
-    if @operator == 'add'
-      return expr['operador1'] + expr['operador2']
-    elsif @operator == 'sub'
-      return expr['operador1'] - expr['operador2']
-    elsif @operator == 'div'
-      return expr['operador1'] / expr['operador2'] # esta truncando o valor !!!
-    elsif @operator == 'mul'
-      return expr['operador1'] * expr['operador2']
-    end
+    operando1 = expr[0].to_i
+    operando2 = expr[1].to_i
+    puts operando1, operando2
+    @operator.eval(operando1, operando2)
   end
 
 end
+
+server = GenericServer.new EvalHandler.new(Calculator::Addition.new), 2001
+server.start()
