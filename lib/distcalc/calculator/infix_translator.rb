@@ -3,8 +3,8 @@ require_relative './expression_tokenizer'
 
 module Calculator
   class InfixTranslator
-    OP_POP_PRIORY = {add: 1, sub: 1, mult: 2, div: 2, open_bracket: 0}
-    OP_PUSH_PRIORY = {add: 1, sub: 1, mult: 2, div: 2, open_bracket: 3}
+    OP_POP_PRIORY = {:add => 1, :sub => 1, :mult=> 2, :diV=>2, :open_bracket=> 0}
+    OP_PUSH_PRIORY = {:add => 1, :sub => 1, :mult => 2, :div=> 2, :open_bracket=> 3}
 
     # Convert an infix tokenized expression to a postfix one
     #

@@ -6,14 +6,19 @@ require_relative './postfix_machine'
 
 module Calculator
   class Maincalculator
-    def initialize
+    def initialize(
+      add =Calculator::Addition.new,
+      sub =Calculator::Subtraction.new,
+      mult =Calculator::Multiplication.new,
+      div = Calculator::Division.new
+    )
       @scanner = Calculator::ExpressionTokenizer.new
       @conv = Calculator::InfixTranslator.new
-      @calc = Calculator::PostfixMachine.new(
-                { add:  Calculator::Addition.new,
-                  sub:  Calculator::Subtraction.new,
-                  mult: Calculator::Multiplication.new,
-                  div:  Calculator::Division.new})
+      @calc = Calculator::PostfixMachine.new({
+                  :add =>  add,
+                  :sub =>  sub,
+                  :mult => mult,
+                  :div =>  div})
     end
 
     #get the user input from keyboard
@@ -27,7 +32,7 @@ module Calculator
     #calculate based on a string... good for testing purposes
     def calculate(entry)
         expr = @scanner.tokenize(entry)
-        expressao = @conv.to_postfix(expr)
+        expressao = @conv.to_postfix(expr)    
         @calc.eval(expressao)
     end
 
