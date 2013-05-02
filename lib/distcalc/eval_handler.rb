@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #Responsible for perform an arithmetic operation given the configured operator
-require './generic_server'
-require './calculator/math_operations'
+require_relative './generic_server'
+require_relative './calculator/math_operations'
 
 class EvalHandler
 
