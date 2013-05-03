@@ -22,13 +22,4 @@ end
 end
 op.parse!(ARGV)
 
-if OPTS[:calc]
-   puts 'fazendoo conta no servidor', OPTS[:server], OPTS[:expr]
-end
-
-
-if OPTS[:server]
-
-   puts 'imprimir port, arquivo de config'
-end
                           
