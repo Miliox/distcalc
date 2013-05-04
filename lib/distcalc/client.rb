@@ -1,11 +1,11 @@
 # encoding: UTF-8
-require './network'
+require_relative './network'
 
 class Client
   include Network::Client
   
   def calculate(expr)
-    puts 'The result is: ', send(gets)
+    puts 'The result is: ', send(expr)
   end
   
   def start
@@ -15,9 +15,6 @@ class Client
     end
   end
 end
-
-client = Client.new
-client.start() 
 
 
 

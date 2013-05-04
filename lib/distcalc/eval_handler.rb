@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #Responsible for perform an arithmetic operation given the configured operator
 require_relative './generic_server'
-require_relative './calculator/math_operations'
+
 
 class EvalHandler
 
@@ -35,6 +35,3 @@ class EvalHandler
   end
 
 end
-
-server = GenericServer.new EvalHandler.new(Calculator::Addition.new), 2001
-server.start()
