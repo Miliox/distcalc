@@ -8,7 +8,7 @@ require_relative './util/log'
 class GenericServer
   def initialize(request_handler, port = 2000)
     UTIL::Log.info("start server on port: #{port}")
-    @server = TCPServer.new port
+    @server = TCPServer.new('0.0.0.0', port)
     @request_handler = request_handler
   end
 
