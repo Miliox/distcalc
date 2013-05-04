@@ -4,13 +4,12 @@ require_relative './generic_server'
 require_relative './network'
 
 class ServerHandler
-
   def initialize(config)
-    addStub = Network::OperationStub.new(config['add']['server'], config['add']['port'])
-    subStub = Network::OperationStub.new(config['sub']['server'], config['sub']['port'])
-    mulStub = Network::OperationStub.new(config['mul']['server'], config['mul']['port'])
-    divStub = Network::OperationStub.new(config['div']['server'], config['div']['port'])
-    @main_calculator = Calculator::Maincalculator.new(addStub, subStub, mulStub, divStub)
+    add = Network::OperationStub.new(config['add']['server'], config['add']['port'])
+    sub = Network::OperationStub.new(config['sub']['server'], config['sub']['port'])
+    mul = Network::OperationStub.new(config['mul']['server'], config['mul']['port'])
+    div = Network::OperationStub.new(config['div']['server'], config['div']['port'])
+    @main_calculator = Calculator::Maincalculator.new(add, sub, mul, div)
   end
   
   def handle_request(request)

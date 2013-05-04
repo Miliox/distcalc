@@ -5,9 +5,7 @@ require 'yaml'
 
 require_relative './distcalc/version'
 require_relative './distcalc/server_handler'
-
-$log = Logger.new(STDOUT)
-$log.level = Logger::INFO
+require_relative './distcalc/util/log'
 
 def execute_server
   op = OptionParser.new do |x|
@@ -26,7 +24,12 @@ def execute_server
 
   end
   op.parse!(ARGV)
+
+  UTIL::Log.debug("server parameter: #{OPTS}")
   config = YAML::load_file(OPTS[:config])
+  UTIL::Log.debug("config: #{config}")
+
+  UTIL::Log.info("Launch server on #{OPTS[:port]}")
   server = GenericServer.new ServerHandler.new(config), OPTS[:port]
   server.start()
 end

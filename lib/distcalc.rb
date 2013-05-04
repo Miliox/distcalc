@@ -2,6 +2,16 @@
 require_relative './distcalc-calc'
 require_relative './distcalc-eval'
 require_relative './distcalc-srv'
+require_relative './distcalc/util/log'
+
+if ARGV.include? '--verbose'
+  UTIL::Log.level(UTIL::LOG_INFO)
+  ARGV.delete('--verbose')
+end
+if ARGV.include? '--trace'
+  UTIL::Log.level(UTIL::LOG_DEBUG)
+  ARGV.delete('--trace')
+end
 
 OPTS = {}
 if ARGV[0] == 'calc'

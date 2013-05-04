@@ -5,9 +5,8 @@ require 'optparse'
 require_relative './distcalc/eval_handler'
 require_relative './distcalc/version'
 require_relative './distcalc/calculator/math_operations'
+require_relative './distcalc/util/log'
 
-$log = Logger.new(STDOUT)
-$log.level = Logger::INFO
 
 def execute_evalserver
   op = OptionParser.new do |x|
@@ -40,9 +39,10 @@ def execute_evalserver
     puts 'distcalc eval --type <add|sub|mul|div> --port <port>'
     return
   end
+  UTIL::Log.debug("eval parameters:  #{OPTS}")
 
-  $log.info("selected operation to eval: #{OPTS[:type]} on port #{OPTS[:port]}")
   server = GenericServer.new EvalHandler.new(operation), OPTS[:port]
+  UTIL::Log.info("operator #{OPTS[:type]} on #{OPTS[:port]}")
   server.start()
 end
 

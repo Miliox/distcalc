@@ -1,10 +1,7 @@
 # encoding: utf-8
-require 'logger'
 require 'optparse'
 require_relative './distcalc/client'
-
-$log = Logger.new(STDOUT)
-$log.level = Logger::INFO
+require_relative './distcalc/util/log'
 
 def execute_client
   op = OptionParser.new do |x|
@@ -27,9 +24,11 @@ def execute_client
 
   end
   op.parse!(ARGV)
+  UTIL::Log.debug("client parameters: #{OPTS}")
 
-  $log.info("executando calculo #{OPTS[:expr]}")
   client = Client.new OPTS[:server], OPTS[:port]
+  UTIL::Log.info("connected to #{OPTS[:server]} by port #{OPTS[:port]}")
+  UTIL::Log.info("processing expression: #{OPTS[:expr]}")
   client.calculate(OPTS[:expr])
 end
 
