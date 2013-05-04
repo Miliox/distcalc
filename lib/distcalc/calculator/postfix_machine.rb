@@ -45,7 +45,7 @@ module Calculator
 
       raise StandardError.new "not supported operation #{token}" \
         unless @operator.keys.include? op
-
+          puts "puts #{arg1}"
       @stack.push(@operator[op].eval(arg1, arg2))
     end
   end
