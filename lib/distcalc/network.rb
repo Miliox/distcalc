@@ -23,7 +23,7 @@ module Network
       @server.puts input
       response = @server.gets
       @server.close()
-      response
+      response.to_i
     end
   end
   
