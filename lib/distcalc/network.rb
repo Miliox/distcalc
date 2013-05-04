@@ -1,11 +1,18 @@
 # encoding: UTF-8
 require 'socket'
-require './calculator/math_operations'
+require_relative './calculator/math_operations'
+
+require 'logger'
+
+$log = Logger.new(STDOUT)
+$log.level = Logger::INFO
+
 
 module Network
 
   module Client
     def initialize(host = 'localhost', port = 2000)
+      $log.info("inicializando client, vai acessar #{host}:#{port}")
       @host = host
       @port = port
     end

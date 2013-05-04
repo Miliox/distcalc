@@ -1,0 +1,4 @@
+add: { server: localhost, port: 3741}
+sub: { server: localhost, port: 2001}
+mul: { server: localhost, port: 3335}
+div: { server: localhost, port: 3336}

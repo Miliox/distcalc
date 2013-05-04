@@ -1,9 +1,14 @@
 # encoding: utf-8
-require 'distcalc/version'
-require "./distcalc/version"
-require "./distcalc/evalserver"
-require 'optparser'
+require "./distcalc-calc"
+require "./distcalc-eval"
+require "./distcalc-srv"
 
-module Distcalc
-  # Your code goes here...
+OPTS = {}
+if ARGV[0] == 'calc'
+   execute_client()
+elsif ARGV[0] == 'eval'
+  execute_evalserver()
+elsif  ARGV[0] == 'server'
+  execute_server()
 end
+

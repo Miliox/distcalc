@@ -1,37 +1,32 @@
 # encoding: utf-8
 require "./distcalc/version"
-require "./distcalc/eval_handler"
+require "./distcalc/server_handler"
 require 'optparse'
+require 'logger'
+require 'yaml'
 
-OPTS = {}
+$log = Logger.new(STDOUT)
+$log.level = Logger::INFO
 
-op = OptionParser.new do |x|
-    x.banner = 'cat <options> <file>'      
+def execute_server
+  op = OptionParser.new do |x|
+    x.banner = ''
     x.separator ''
+    OPTS[:port] = '6416'
+    OPTS[:config] = 'nodesconfig'
 
-    x.on("-c", "--calc", "calcular expressao") \
-        { OPTS[:calc] = true }      
-    x.on('-s', '--server SERVER', String, 'servidor') do |server|
-        OPTS[:server] = server 
+    x.on('-p', '--port PORT', String, 'port to connect to') do |p|
+      OPTS[:port] = p
     end
 
-     x.on('-m', '--math expr', String, 'servidor') do |expr|
-        OPTS[:expr] = expr
+    x.on('-c', '--config CONFIG', String, 'configuration of the nodes') do |c|
+      OPTS[:config] = c
     end
 
-end
-op.parse!(ARGV)
-
-if OPTS[:calc]
-   puts 'fazendoo conta no servidor', OPTS[:server], OPTS[:expr]
-end
-
-
-if OPTS[:server]
-
-   puts 'imprimir port, arquivo de config'
-end
-module Distcalc
-  # Your code goes here...
+  end
+  op.parse!(ARGV)
+  config = YAML::load(File.open(OPTS[:config]))
+  server = GenericServer.new ServerHandler.new(config), OPTS[:port] 
+  server.start()
 end
 
