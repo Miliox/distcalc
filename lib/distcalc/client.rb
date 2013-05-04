@@ -3,11 +3,11 @@ require_relative './network'
 
 class Client
   include Network::Client
-  
+
   def calculate(expr)
-    puts 'The result is: ', send(expr)
+    puts send(expr)
   end
-  
+
   def start
     while(true)
       puts 'Provide a math expression:'
@@ -15,11 +15,3 @@ class Client
     end
   end
 end
-
-
-
-
-
-
-
-   

@@ -1,20 +1,16 @@
 # encoding: utf-8
-require "./distcalc/client" # enquanto nao esta configurado
-
 require 'optparse'
-require 'logger'
-
-$log = Logger.new(STDOUT)
-$log.level = Logger::INFO
+require_relative './distcalc/client'
+require_relative './distcalc/util/log'
 
 def execute_client
   op = OptionParser.new do |x|
-    x.banner = ''
+    x.banner = 'distcalc calc [--server <ip|uri>] [--port <port>] --eval <EXPR>'
     x.separator ''
     OPTS[:server] = 'localhost'
-    OPTS[:port] = '6416'
+    OPTS[:port] = 6416
 
-    x.on('-p', '--port PORT', String, 'port to connect to') do |p|
+    x.on('-p', '--port PORT', Numeric, 'port to connect to') do |p|
       OPTS[:port] = p
     end
 
@@ -22,14 +18,17 @@ def execute_client
       OPTS[:server] = s
     end
 
-    x.on('-m', '--math EXPR', String, 'math expression to evaluate') do |expr|
+    x.on('-e', '--eval EXPR', String, 'math expression to evaluate') do |expr|
       OPTS[:expr] = expr
     end
 
   end
   op.parse!(ARGV)
-  $log.info("executando calculo #{OPTS[:expr]}")
+  UTIL::Log.debug("client parameters: #{OPTS}")
+
   client = Client.new OPTS[:server], OPTS[:port]
+  UTIL::Log.info("connected to #{OPTS[:server]} by port #{OPTS[:port]}")
+  UTIL::Log.info("processing expression: #{OPTS[:expr]}")
   client.calculate(OPTS[:expr])
 end
 
