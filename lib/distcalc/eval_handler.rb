@@ -4,12 +4,10 @@ require_relative './generic_server'
 
 
 class EvalHandler
-
   def initialize(operator)
     @operator = operator
   end
 
-  # handle the request TODO create an object to handle the protocol
   def handle_request(request)
     calculate(parse_request(request))
   end
@@ -30,7 +28,6 @@ class EvalHandler
   def calculate(expr)
     operando1 = expr[0].to_i
     operando2 = expr[1].to_i
-    puts operando1, operando2
     @operator.eval(operando1, operando2)
   end
 
