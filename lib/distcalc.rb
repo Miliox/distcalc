@@ -22,8 +22,10 @@ elsif  ARGV[0] == 'server'
   execute_server()
 else
   puts 'Usage:'
-  puts 'distcalc calc -s|--server <ip|uri> -p|--port <port> --eval <expr>'
-  puts 'distcalc eval -s|--server <ip|uri> -p|--port <port> --eval <expr>'
-  puts 'distcalc server -p|--port <port>   -c|--config-file <file.yaml>'
+  puts 'distcalc calc -s|--server <ip|uri> -p|--port <port> -e|--eval <expr>'
+  puts 'distcalc eval -t|--type add|sub|mul|div -p|--port <port>'
+  puts 'distcalc server -p|--port <port> -c|--config-file <file.yaml>'
+  puts 'use --verbose for more details'
+  puts 'use --trace for debug info'
 end
 
